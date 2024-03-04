@@ -33,7 +33,11 @@ class Combinator {
             //start with two longs to be able to hold onto the index and the index max
             long j, max = 1<<(str.size()-1);
             for (j = 0; j < max; j++) {
-                cout << j << ": {";
+                cout << j << " ";
+                for (int i = 0; i < str.size()-1; i++) {
+                    cout << ((j & (1<<i)) >> i);
+                }
+                cout << ": {";
                 for (int i = 0; i < str.size()-1; i++) {
                     //cout << ((j >> (i)) & 1) << "|";
                     cout << ((j >> (i)) & 1 ? str[i+1] : '\0');
@@ -122,6 +126,7 @@ class Combinator {
 
         bool check_if_mobile_exists(vector<unsigned short> &permutation, unsigned short& mobile_index, short& pointing_to) {
             //create a list of candidates for mobiles, first index however says if slot is filled
+            //TODO replace vector candidate system with determining true mobile number in one go
             vector<unsigned short> candidates(permutation.size());
             
             //index to fill candidates array with, instead of dynamic allocation
