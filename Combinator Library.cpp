@@ -11,6 +11,27 @@ class Combinator {
         inline int nth_grey_number(const int& n) {
             return (n ^ (n >> 1));
         }
+        inline bool check_if_mobile_exists(const vector<unsigned short>& permutation, unsigned short& mobile_index, short& pointing_to) {
+            unsigned short pointed_to_index = 0;
+            mobile_index = 0;
+
+            for (int i = 1; i < permutation.size(); i++) {
+                pointed_to_index = i + (permutation[i] & 1 ? 1 : -1);
+
+                if (pointed_to_index > 0 && pointed_to_index < permutation.size()) {
+                    if (permutation[i] > permutation[pointed_to_index] && permutation[i] > permutation[mobile_index >> 1]) {
+                        mobile_index = (i << 1) + 1; //flag that a candidate index has been found
+                    }
+                }
+            }
+
+            if (mobile_index <= 0) return false;
+
+            mobile_index >>= 1;
+            pointing_to = (permutation[mobile_index] & 1 ? 1 : -1);
+
+            return true;
+        }
     public:
         string getString() const {
             return str;
@@ -122,59 +143,6 @@ class Combinator {
                 counter++;
             }
             cout << endl;
-        }
-
-        bool check_if_mobile_exists(vector<unsigned short> &permutation, unsigned short& mobile_index, short& pointing_to) {
-            //create a list of candidates for mobiles, first index however says if slot is filled
-            //TODO replace vector candidate system with determining true mobile number in one go
-            vector<unsigned short> candidates(permutation.size());
-            
-            //index to fill candidates array with, instead of dynamic allocation
-            int next_index = 0;
-
-            unsigned short pointed_to_index = 0;
-
-            for (int i = 1; i < permutation.size(); i++) {
-
-                pointed_to_index = pointed_to_index = i + (permutation[i] & 1 ? 1 : -1);
-
-                if (pointed_to_index > 0 && pointed_to_index < permutation.size()) {
-                    //cout << endl<< (permutation[i] > permutation[pointed_to_index]);
-                    if (permutation[i] > permutation[pointed_to_index]) {
-                        
-                        candidates.at(next_index) = (i << 1) + 1; //sets candidate slot as filled (+1) and adds the address
-                        //cout << endl;
-                        //for (auto x : candidates) {
-                        //    cout << x;
-                        //}
-                        //cout << endl;
-                        next_index++;
-                    }
-                }
-            }
-
-            
-
-            if (next_index == 0 || (candidates[0] & 1) == 0) return false;
-            
-            
-            //find largest candidate index, or most mobile
-            mobile_index = 0;
-            for (int i = 0; i < next_index; i++) {
-                
-                if (permutation[candidates[i] >> 1] > permutation[mobile_index]) {
-                    mobile_index = candidates[i] >> 1;
-                }
-            }
-
-            //cout << endl;
-            //for (unsigned short x : permutation) {
-            //    cout << (x >> 1);
-            //}
-
-            pointing_to = (permutation[mobile_index] & 1 ? 1 : -1);
-
-            return true;
         }
 
 };
