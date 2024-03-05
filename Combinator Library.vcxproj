@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Combinator Library.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Combinator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Combinator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
