@@ -15,15 +15,19 @@ int main()
 		cin >> i;
 	}
 
+
 	cout << combination.getString() << " | " << combination.getString().size() - 1 << endl;
 	cout << endl;
 
+	combination.init();
+
 	while (1) {
 		cin >> i;
-
+		
 		if (i == 'A') combination.generate_addwise_permutations();
 		if (i == 'B') combination.generate_addwise_combinations();
 		if (i == 'C') combination.generate_greycode_combinations();
+		if (i == 'D') combination.print_example_permutations();
 		if (i == '-') return 0;
 	}
 	return 0;
